@@ -5,5 +5,7 @@
 <body class="p text-center">
 {{ object.title }} <br/>
 {{ object.description }} <br/>
+{% if object.image%}
 <img src='{{ object.image.url }}' class='img-fluid' id="p" />
+{%endif%}
 </body>
