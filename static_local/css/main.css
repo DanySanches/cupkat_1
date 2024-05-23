@@ -2,7 +2,17 @@ body {
     color: #ccc;
 }
 
+.p{
+    
+    color:rgb(13, 13, 12)
+}
+
 .img-fluid{
     width: 400px;
     height: 200px;
+}
+
+#p{
+    width: 200px;
+    height: 300px;
 }
