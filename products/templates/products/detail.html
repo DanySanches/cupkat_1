@@ -1,11 +1,12 @@
-{% load static %}
+{% extends "base.html" %}
 
-<link rel='stylesheet' href='{% static "css/main.css" %}'>
 
-<body class="p text-center">
+{% block content %}
+
 {{ object.title }} <br/>
 {{ object.description }} <br/>
 {% if object.image%}
 <img src='{{ object.image.url }}' class='img-fluid' id="p" />
 {%endif%}
-</body>
+
+{% endblock content %}

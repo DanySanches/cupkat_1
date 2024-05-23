@@ -7,12 +7,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cupkat base</title>
+    <title>Cupkat</title>
+    {% include 'base/css.html' %}
+    {% block base_head %}{% endblock base_head %}
 </head>
-{% block content %} {% endblock %}
+
+
 <body>
-    
-  
+    {% include 'base/navbar.html' %}
+    {% block content %} {% endblock %}
+    {% include 'base/js.html' %}
 </body>
 
 </html>
