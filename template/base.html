@@ -14,7 +14,7 @@
 
 
 <body>
-    {% include 'base/navbar.html' %}
+    {% include 'base/navbar.html' with nome_da_marca='Cupkat' %}
     {% block content %} {% endblock %}
     {% include 'base/js.html' %}
 </body>
