@@ -16,6 +16,7 @@ urlpatterns = [
     path('login/', login_page, name='login'),
     path('logout/', logout_page, name='logout'),
     path('register/', register_page, name='register'),
+    path('search/', include("search.urls", namespace="search")),
     path('products/', include("products.urls", namespace="products")),
     path('admin/', admin.site.urls),
 ]
