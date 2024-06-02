@@ -58,9 +58,10 @@ def logout_page(request):
                 "content": "Você efetuou o logout com sucesso! :)"
               }
     logout(request)
-    return render(request, "accounts/logout.html", context)
+    return render(request, "home_page.html", context)
 
 User = get_user_model()
+
 def register_page(request):
     form = RegisterForm(request.POST or None)
     context = {
@@ -73,4 +74,13 @@ def register_page(request):
         password = form.cleaned_data.get("password")
         new_user = User.objects.create_user(username, email, password)
         print(new_user)
+        context["register_success_script"] = """
+            <script>
+                alert('Cadastro realizado com sucesso!');
+                window.location.href = "/ ";
+            </script>
+        """
+          
+       
+      
     return render(request, "accounts/register.html", context)

@@ -1,8 +1,14 @@
-{% extends "base.html" %}
-{% block content %}
-<form method='POST'> 
-    {% csrf_token %}
+{% extends "base.html" %} {% block content %}
+<form method="POST">
+  {% csrf_token %}
+  <div class="loginForm mx-auto">
     {{ form }}
-    <button type='submit' class='btn btn-info'>Enviar</button>
+    <button type="submit" class="btn btn-outline-info mt-3">Enviar</button>
+  </div>
 </form>
+
+
+{{ register_success_script|safe }}
+
+
 {% endblock %}

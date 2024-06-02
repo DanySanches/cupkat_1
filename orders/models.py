@@ -2,6 +2,7 @@
 import math
 from django.db import models
 from django.db.models.signals import pre_save, post_save
+from addresses.models import Address
 from billing.models import BillingProfile
 from carts.models import Cart
 from cupkat.utils import unique_order_id_generator
@@ -23,7 +24,7 @@ class OrderManager(models.Manager):
             obj = qs.first()
         else:
             obj = self.model.objects.create(
-                    billing_profile = billing_profile, 
+                    billing_profile = billing_profile,
                     cart=cart_obj)
             created = True
         return obj, created
@@ -32,8 +33,8 @@ class Order(models.Model):
     billing_profile = models.ForeignKey(BillingProfile, on_delete=models.CASCADE, null = True, blank = True)
     order_id = models.CharField(max_length = 120, blank = True)
     # billing_profile = ?
-    # shipping_address = ?
-    # billing_address
+    shipping_address = models.ForeignKey(Address, related_name="shipping_address", on_delete=models.CASCADE, null=True, blank=True)
+    billing_address = models.ForeignKey(Address, related_name="billing_address", on_delete=models.CASCADE, null=True, blank=True)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null = True)
     status = models.CharField(max_length = 120, default = 'created', choices = ORDER_STATUS_CHOICES )
     shipping_total = models.DecimalField(default = 5.99, max_digits = 100, decimal_places = 2)
@@ -57,9 +58,10 @@ class Order(models.Model):
 def pre_save_create_order_id(sender, instance, *args, **kwargs):
     if not instance.order_id:
         instance.order_id = unique_order_id_generator(instance)
-    # retorna todos os orders com esta instância de cart, 
-    # excluindo aqueles que têm a mesma instância de billing_profile
+    # return all orders with this Cart instance, excluding those  
+    # that have the same billing profile instance
     qs = Order.objects.filter(cart = instance.cart).exclude(billing_profile = instance.billing_profile)
+    print("QuerySet: ", qs)
     if qs.exists():
         qs.update = False
 

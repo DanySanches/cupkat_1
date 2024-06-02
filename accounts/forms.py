@@ -11,10 +11,10 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}),label="Senha")
 
 class RegisterForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),label="Nome de Usuário")
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}),label="Senha")
+    password2 = forms.CharField(label='Confirmar Senha', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     def clean_username(self):
         username = self.cleaned_data.get('username')

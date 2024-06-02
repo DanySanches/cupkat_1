@@ -1,8 +1,9 @@
 from django import forms
 from .models import Address
 
-
 class AddressForm(forms.ModelForm):
+    #is_billing_address = forms.BooleanField(label="É endereço de cobrança?", required=False)
+
     class Meta:
         model = Address
         fields = [
@@ -22,18 +23,10 @@ class AddressForm(forms.ModelForm):
             "state": "Estado",
         }
         widgets = {
-            "postal_code": forms.TextInput(
-                attrs={"class": "form-control", "id": "cep"}
-            ),
-            "address_line_1": forms.TextInput(
-                attrs={"class": "form-control", "id": "address_line_1"}
-            ),
-            "address_line_2": forms.TextInput(
-                attrs={"class": "form-control", "id": "address_line_2"}
-            ),
+            "postal_code": forms.TextInput(attrs={"class": "form-control", "id": "cep"}),
+            "address_line_1": forms.TextInput(attrs={"class": "form-control", "id": "address_line_1"}),
+            "address_line_2": forms.TextInput(attrs={"class": "form-control", "id": "address_line_2"}),
             "city": forms.TextInput(attrs={"class": "form-control", "id": "city"}),
-            "country": forms.TextInput(
-                attrs={"class": "form-control", "id": "country"}
-            ),
+            "country": forms.TextInput(attrs={"class": "form-control", "id": "country"}),
             "state": forms.TextInput(attrs={"class": "form-control", "id": "state"}),
         }

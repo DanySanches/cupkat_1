@@ -27,7 +27,7 @@ document.getElementById('cep').addEventListener('blur', function() {
                         document.getElementById('city').value = data.localidade;
                         document.getElementById('state').value = data.uf;
                         document.getElementById('country').value = 'Brasil';
-                        alert("Endereço cadastrado com sucesso");
+                       
                     } else {
                         alert("CEP não encontrado.");
                     }
@@ -35,6 +35,7 @@ document.getElementById('cep').addEventListener('blur', function() {
         } else {
             alert("Formato de CEP inválido.");
         }
+      
     }
 });
 </script>
