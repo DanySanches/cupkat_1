@@ -4,11 +4,11 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class GuestForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control w-50'}))
 
 class LoginForm(forms.Form):
-    Usuário = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    Senha = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),label="Nome de Usuário")
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}),label="Senha")
 
 class RegisterForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
