@@ -17,6 +17,8 @@
 <body>
     {% include 'base/navbar.html' with nome_da_marca='Loja virtual' %}
     <div class='container'>
+        {% include 'search/snippets/search-form.html' %}
+        
         {% block content %} {% endblock %}
     </div>
     {% include 'base/js.html' %}
