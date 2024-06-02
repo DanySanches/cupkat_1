@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
+{% if not billing_profile %}
+  <div class='row' text-center>
+    <div class='col-12 col-md-6'>
+      <p class='lead'>Login</p>
+      {% include 'accounts/snippets/form.html' with form=login_form next_url=request.build_absolute_uri %}
+    </div>
+    <div class='col-12 col-md-6'>
+      Continuar como convidado
+    </div>
+  </div>
+{% else %}
 <div class="container mt-5">
   <h1 class="mb-4">Checkout</h1>
   <table class="table">
@@ -28,4 +39,5 @@
     <a class='btn btn-outline-success' href="#">Confirmar Pedido</a>
   </div>
 </div>
+{% endif %}
 {% endblock %}
