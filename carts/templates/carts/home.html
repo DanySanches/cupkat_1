@@ -33,11 +33,18 @@
         <td ><b>Subtotal </b>{{ cart.subtotal }}</td>
         <td></td>
       </tr>
+
       <tr class="table-warning">
         <td colspan="3"></td> <!-- Coluna vazia -->
         <td><b>Total </b>{{ cart.total }}</td>
         <td></td>
       </tr>
+
+      <tr>
+        <td colspan="2"></td>
+        <td><a class='btn btn-outline-success' href='{% url "cart:checkout" %}'>Finalizar Pedido</a></td>
+      </tr>
+    
     </tbody>
   </table>
  

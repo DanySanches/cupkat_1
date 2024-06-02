@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Checkout</h1>
+  <table class="table">
+    <thead>
+      <tr class="table-warning">
+        <th>Descrição</th>
+        <th>Valor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-light">
+        <td>Total do carrinho:</td>
+        <td>{{ object.cart.total }}</td>
+      </tr>
+      <tr class="table-warning">
+        <td>Frete:</td>
+        <td>{{ object.shipping_total }}</td>
+      </tr>
+      <tr class="table-secondary">
+        <td>Total:</td>
+        <td>{{ object.total }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-end">
+    <a class='btn btn-outline-success' href="#">Confirmar Pedido</a>
+  </div>
+</div>
+{% endblock %}
