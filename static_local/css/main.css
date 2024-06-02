@@ -1,13 +1,18 @@
 body {
-    color: #ccc;
+    color: #efeed7;
+   
 }
 
-.img-fluid{
+
+#p {
     width: 400px;
-    height: 200px;
+    height: 300px;
 }
 
-#p{
-    width: 200px;
-    height: 300px;
+.table-custom-yellow {
+    background-color: rgb(201, 227, 55);
+}
+
+.table-white {
+    background-color: white;
 }

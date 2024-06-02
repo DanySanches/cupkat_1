@@ -10,12 +10,15 @@
     <title>Cupkat</title>
     {% include 'base/css.html' %}
     {% block base_head %}{% endblock base_head %}
+  
 </head>
 
 
 <body>
-    {% include 'base/navbar.html' with nome_da_marca='Cupkat' %}
-    {% block content %} {% endblock %}
+    {% include 'base/navbar.html' with nome_da_marca='Loja virtual' %}
+    <div class='container'>
+        {% block content %} {% endblock %}
+    </div>
     {% include 'base/js.html' %}
 </body>
 

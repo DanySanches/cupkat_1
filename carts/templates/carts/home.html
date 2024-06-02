@@ -1,34 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Carrinho</h1>
+<div class="container mt-5">
+  <h1 class="mb-4">Carrinho</h1>
   {% if cart.products.exists %}
-    <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Nome do produto</th>
-          <th>Preço do produto</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for product in cart.products.all %}
-        <tr>
-          <thscope="row">{{ forloop.counter }}</th>
-          <td><a href='{{ product.get_absolute_url }}'>{{ product.title }}</a><small><a href='#'>Deseja remover?</a></small></td>
-          <td>{{ product.price }}</td>
-        </tr>
-        {% endfor %}
-        <tr>
-          <tdcolspan="2"></td>
-          <td><b>Subtotal</b> {{ cart.subtotal }}</td>
-        </tr>
-        <tr>
-          <tdcolspan="2"></td>
-          <td><b>Total</b> {{ cart.total }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <table class="table">
+    <thead>
+      <tr class="table-warning">
+        <th>#</th>
+        <th>Nome do produto</th>
+        <th></th>
+        <th>Preço do produto</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in cart.products.all %}
+      <tr class="{% cycle 'table-light' 'table-warning' %}">
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>
+          <a style="text-decoration: none; color:black;" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+        </td>
+        <td>
+          <a  href='{{ product.get_absolute_url }}'></a>
+          {% include 'products/snippets/update-cart.html' with product=product cart=cart in_cart=True  %}
+        </td>
+        <td>{{ product.price }}</td>
+        <td></td> <!-- Coluna vazia -->
+      </tr>
+      {% endfor %}
+      <tr class="table-secondary">
+        <td colspan="3"></td> <!-- Coluna vazia -->
+        <td ><b>Subtotal </b>{{ cart.subtotal }}</td>
+        <td></td>
+      </tr>
+      <tr class="table-warning">
+        <td colspan="3"></td> <!-- Coluna vazia -->
+        <td><b>Total </b>{{ cart.total }}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+ 
   {% else %}
-    <p class='lead'>Carrinho vazio</p>
+  <p class="lead">Carrinho vazio</p>
   {% endif %}
+</div>
 {% endblock %}
