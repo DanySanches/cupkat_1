@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.db import models
-from .utils import unique_slug_generator
+from cupkat.utils import unique_slug_generator
 from django.db.models.signals import pre_save
 from django.urls import reverse
 
