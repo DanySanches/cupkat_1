@@ -15,7 +15,7 @@ def unique_order_id_generator(instance):
     Klass = instance.__class__
     qs_exists = Klass.objects.filter(order_id = order_new_id).exists()
     if qs_exists:
-        return unique_order_id_generator(instance)
+        return unique_slug_generator(instance)
     return order_new_id
 
 def unique_slug_generator(instance, new_slug=None):

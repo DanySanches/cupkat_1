@@ -1,3 +1,4 @@
+
 from django.db import models
 from cupkat.utils import unique_slug_generator
 from products.models import Product

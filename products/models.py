@@ -15,8 +15,8 @@ class ProductQuerySet(models.query.QuerySet):
 
     def search(self, query):
         lookups = (Q(title__contains = query) | 
-                   Q(description__contains = query) | 
-                   Q(price__contains = query))
+                        Q(description__contains = query) | 
+                        Q(price__contains = query))
         return self.filter(lookups).distinct()
 
 class ProductManager(models.Manager):
@@ -31,13 +31,14 @@ class ProductManager(models.Manager):
         #self.get_queryset().filter(featured = True)
         return self.get_queryset().featured()
 
-    def search(self, query):
-        lookups = (Q(title__contains = query) | 
-                   Q(description__contains = query) | 
-                   Q(price__contains = query) |
-                   Q(tag__title__icontains = query))
-        return self.filter(lookups).distinct()
+    def get_by_id(self, id):
+        qs = self.get_queryset().filter(id = id)
+        if qs.count() == 1:
+            return qs.first()
+        return None
 
+    def search(self, query):
+        return self.get_queryset().active().search(query)
 
 # Create your models here.
 class Product(models.Model): #product_category
