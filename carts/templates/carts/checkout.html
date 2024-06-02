@@ -64,8 +64,10 @@
       </tr>
     </tbody>
   </table>
-  <div class="d-flex justify-content-end">
-     <button type="submit" class="btn btn-outline-success">Finalizar Compra</button>
+  <div class="d-flex justify-content-end"> <form class='form' method='POST' action="">{% csrf_token %}
+    <button type="submit" class="btn btn-outline-success">Finalizar Compra</button>
+  </form>
+     
   </div>
   {% endif %}
 </div>
