@@ -4,25 +4,38 @@
 {{ object.order_id }} -- {{ object.cart }}
 {% if not billing_profile %}
 <div class='row text-center mt-5'>
-<div class='col-12 col-md-6'>
+  <div class='col-12 col-md-6'>
     <p class='lead text-center'>Login</p>
     {% include 'accounts/snippets/form.html' with form=login_form next_url=request.build_absolute_uri %}
-</div>
+  </div>
 
-<div class='col-12 col-md-6'> 
-
-  <p class='lead'>Continuar como Convidado</p>
-     
- 
+  <div class='col-12 col-md-6'> 
+    <p class='lead'>Continuar como Convidado</p>
     {% url "guest_register" as guest_register_url %}
     {% include 'accounts/snippets/form.html' with form=guest_form next_url=request.build_absolute_uri action_url=guest_register_url %}
-
+  </div>
 </div>
-
-</div>
-
-  {% else %}
+{% else %}
 <div class="container mt-5">
+  {% if not object.shipping_address %}
+  <div class='row'>
+    <div class='col-md-6 mx-auto col-10'>
+      <p class='lead'>Endereço de Entrega</p>
+      <hr/>
+      {% url "checkout_address_create" as checkout_address_create %}
+      {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create address_type='shipping' %}
+    </div>
+  </div>
+  {% elif not object.billing_address %}
+  <div class='row'>
+    <div class='col-md-6 mx-auto col-10'>
+      <p class='lead'>Endereço de Pagamento</p>
+      <hr/>
+      {% url "checkout_address_create" as checkout_address_create %}
+      {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create address_type='billing' %}
+    </div>
+  </div>
+  {% else %}
   <h1 class="mb-4">Checkout</h1>
   <table class="table">
     <thead>
@@ -47,8 +60,12 @@
     </tbody>
   </table>
   <div class="d-flex justify-content-end">
-    <a class='btn btn-outline-success' href="#">Confirmar Pedido</a>
+    <form method="POST" action="{% url 'order_complete' %}"> <!-- Ajuste a URL conforme necessário -->
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-success">Finalizar Compra</button>
+    </form>
   </div>
+  {% endif %}
 </div>
 {% endif %}
 {% endblock %}
