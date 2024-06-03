@@ -66,6 +66,18 @@
         <td>{{ object.cart.total }}</td>
       </tr>
       <tr class="table-warning">
+        <td>Itens do Carrinho:</td>
+        <td>{% for product in object.cart.products.all %}{{ product }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+      </tr>
+      <tr class="table-light">
+        <td>Endereço de Envio:</td>
+        <td>{{ object.shipping_address.get_address }}</td>
+      </tr>
+      <tr class="table-warning">
+        <td>Endereço de Cobrança:</td>
+        <td>{{ object.billing_address.get_address }}</td>
+      </tr>
+      <tr class="table-light">
         <td>Frete:</td>
         <td>{{ object.shipping_total }}</td>
       </tr>
