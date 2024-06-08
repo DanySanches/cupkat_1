@@ -17,6 +17,8 @@ def cart_home(request):
 
 def cart_update(request):
     product_id = request.POST.get('product_id')
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        print("Ajax request")
     if product_id is not None:
         try:
             product_obj = Product.objects.get(id=product_id)
@@ -68,6 +70,7 @@ def checkout_home(request):
             request.session['cart_items'] = 0
             del request.session['cart_id']
             return redirect("cart:success")
+    
     context = {
         "object": order_obj,
         "billing_profile": billing_profile,

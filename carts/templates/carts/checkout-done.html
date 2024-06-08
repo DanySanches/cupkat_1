@@ -1,7 +1,9 @@
 
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 <div class='col-6 mx-auto py-5 text-center'>
   <h1 class='display-1'>Obrigado pelo seu pedido!!!</h1>
+  <img src="{% static 'img/logoV.jpg' %}" class='img-fluid' />
 </div>
 {% endblock %}
