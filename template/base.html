@@ -42,14 +42,15 @@
                 console.log("Sucesso")
                 console.log(data)
                 console.log("Adicionado", data.added)
-                console.log("Removido", data.removed)
+                console.log("Adicionado", data.removed)
                 const submitSpan = thisForm.find(".submit-span")
-                console.log(submitSpan.html())
                 if(data.added){
-                  submitSpan.html("No carrinho <button type='submit' class='btn btn-link'>Excluir</button>")
-              } else{
-                  submitSpan.html("<button type='submit' class='btn btn-success'>Adicionar</button>")
-              }
+                    submitSpan.html("No carrinho <button type='submit' class='btn btn-link'>Excluir</button>")
+                } else{
+                    submitSpan.html("<button type='submit' class='btn btn-success'>Adicionar</button>")
+                }
+                    const navbarCount = $(".navbar-cart-count")
+                    navbarCount.text(data.cartItemCount)
               },
               error: function(errorData){
                 console.log("Erro")
@@ -59,8 +60,5 @@
           })
         })
       </script>
-               
-     
     </body>
-    
-</html>
+  </html>
