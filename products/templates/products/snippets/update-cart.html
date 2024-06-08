@@ -6,10 +6,12 @@
       Excluir
     </button>
   {% else %}
+  <span class='submit-span'>
     {% if product in cart.products.all %}
       No carrinho <button type='submit' class='btn btn-link'>Excluir</button>
     {% else %}
       <button type='submit' class='btn btn-success'>Adicionar</button>
     {% endif %}
+  </span>
   {% endif %}
 </form>
