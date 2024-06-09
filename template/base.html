@@ -86,6 +86,11 @@
             }
           },
           error: function(errorData){
+            $.alert({
+                title: "Oops!",
+                content: "Ocorreu um erro, tente mais tarde novamente!",
+                theme: "modern",
+            })
             console.log("Erro")
             console.log(errorData)
           }
@@ -142,6 +147,11 @@
               }
             },
             error: function(errorData){
+              $.alert({
+                title: "Oops!",
+                content: "Ocorreu um erro, tente mais tarde novamente!",
+                theme: "modern",
+              })
               console.log("Erro")
               console.log(errorData)
             }
