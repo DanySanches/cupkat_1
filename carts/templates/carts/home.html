@@ -36,8 +36,8 @@
         <td class="table-secondary"><b>Total</b> $<span class="cart-total"> {{ cart.total }} </span> </td>
       </tr>
       <tr>
-        <td colspan="2"></td>
-        <td><a class='btn btn-lg btn-success' href='{% url "cart:checkout" %}'>Conferir compra</a></td>
+        <td colspan="3"></td>
+        <td><a class='btn btn-outline-success text-end' href='{% url "cart:checkout" %}'>Finalizar Compra</a></td>
       </tr>
     </tbody>
   </table>
