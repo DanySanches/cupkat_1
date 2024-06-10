@@ -1,7 +1,7 @@
-<div class="card" style="width: 18rem; height:25rem">
+<div class="card" style="width: 18rem; height: 25rem;">
     {% if instance.image %}
     <a class="mx-auto" href="{{ instance.get_absolute_url }}">
-        <img style="width:200px; height:200px;"src="{{ instance.image.url }}" class="card-img-top" alt="{{ instance.title }} logo">
+        <img style="width: 200px; height: 200px;" src="{{ instance.image.url }}" class="card-img-top" alt="{{ instance.title }} logo">
     </a>
     {% endif %}
     <div class="card-body">

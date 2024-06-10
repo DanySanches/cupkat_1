@@ -1,15 +1,17 @@
 from django.contrib.auth import authenticate, get_user_model
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-
+from products.models import Product
 from .forms import ContactForm
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
 def home_page(request):
+    # Busca todos os produtos do banco de dados
+    products = Product.objects.all()
     context = {
-                    "title": "Home Page",
-                    "content": "Bem vindo a Home Page",
+                    'object_list': products,  # Passando os produtos para o contexto
               }
     if request.user.is_authenticated:
         context["premium_content"] = "Você é um usuário Premium"
