@@ -54,36 +54,69 @@
       })
   })
 
-   
+   // Auto Search
+const searchForm = $(".search-form");
+const searchInput = searchForm.find("[name='q']"); // input name='q'
+const typingInterval = 500; // .5 seconds
+const searchBtn = searchForm.find("[type='submit']");
+const voiceSearchBtn = $("#voiceSearchBtn");
 
-    // Auto Search
-    const searchForm = $(".search-form")
-    const searchInput = searchForm.find("[name='q']") // input name='q'
-    const typingTimer = 0;
-    const typingInterval = 500 // .5 seconds
-    const searchBtn = searchForm.find("[type='submit']")
-    searchInput.keyup(function (event) {
-      // key released
-      clearTimeout(typingTimer)
-      typingTimer = setTimeout(performSearch, typingInterval)
-    })
-    searchInput.keydown(function (event) {
-      // key pressed
-      clearTimeout(typingTimer)
-    })
-    function displaySearching() {
-      searchBtn.addClass("disabled")
-      searchBtn.html("<i class='fa fa-spin fa-spinner'></i> Pesquisando...")
-    }
+let typingTimer;
 
-    function performSearch() {
-      displaySearching()
-      var query = searchInput.val()
-      setTimeout(function () {
-        window.location.href = '/search/?q=' + query
-      }, 1000)
-    }
+searchInput.keyup(function(event) {
+  // key released
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(performSearch, typingInterval);
+});
 
+searchInput.keydown(function(event) {
+  // key pressed
+  clearTimeout(typingTimer);
+});
+
+voiceSearchBtn.on("click", function() {
+  if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    
+    recognition.onstart = function() {
+      console.log("Voice recognition started. Try speaking into the microphone.");
+      voiceSearchBtn.html("<i class='fa fa-spinner fa-spin'></i>");
+    };
+    
+    recognition.onspeechend = function() {
+      console.log("Voice recognition ended.");
+      recognition.stop();
+      voiceSearchBtn.html("<i class='fa fa-microphone'></i>");
+    };
+    
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      searchInput.val(transcript);
+      performSearch();
+    };
+    
+    recognition.start();
+  } else {
+    alert("Seu navegador não suporta reconhecimento de voz.");
+  }
+});
+
+function displaySearching() {
+  searchBtn.addClass("disabled");
+  searchBtn.html("<i class='fa fa-spin fa-spinner'></i> Pesquisando...");
+}
+
+function performSearch() {
+  displaySearching();
+  const query = searchInput.val();
+  setTimeout(function() {
+    window.location.href = '/search/?q=' + query;
+  }, 1000);
+}
+
+
+    
     //Cart + Add Product
     const productForm = $(".form-product-ajax")
     productForm.submit(function (event) {
