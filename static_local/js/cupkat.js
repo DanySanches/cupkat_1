@@ -114,112 +114,79 @@ function performSearch() {
     window.location.href = '/search/?q=' + query;
   }, 1000);
 }
-
-
-    
-    //Cart + Add Product
-    const productForm = $(".form-product-ajax")
+    // Cart + Add Product
+    const productForm = $(".form-product-ajax");
     productForm.submit(function (event) {
-      event.preventDefault();
-      // console.log("O formulário não foi enviado!");
-      // o this pega os dados relacionados a esse form
-      const thisForm = $(this);
-      //const actionEndpoint = thisForm.attr("action");
-      const actionEndpoint = thisForm.attr("data-endpoint");
-      const httpMethod = thisForm.attr("method");
-      const formData = thisForm.serialize();
-      $.ajax({
-        url: actionEndpoint,
-        method: httpMethod,
-        data: formData,
-        success: function (data) {
-          // console.log("Sucesso")
-          // console.log(data)
-          // console.log("Adicionado", data.added)
-          // console.log("Removido", data.removed)
-          const submitSpan = thisForm.find(".submit-span")
-          if (data.added) {
-            submitSpan.html("<button type='submit' class='btn btn-outline-danger'>Excluir</button>")
-          } else {
-            submitSpan.html("<button type='submit' class='btn btn-success'>Adicionar</button>")
-          }
-          const navbarCount = $(".navbar-cart-count")
-          navbarCount.text(data.cartItemCount)
-          const currentPath = window.location.href
-          if (currentPath.indexOf("cart") != -1) {
-            refreshCart()
-          }
-        },
-        error: function (errorData) {
-          $.alert({
-            title: "Oops!",
-            content: "Ocorreu um erro, tente mais tarde novamente!",
-            theme: "modern",
-          })
-          console.log("Erro")
-          console.log(errorData)
-        }
-      })
-    })
-    function refreshCart() {
-      //console.log("Excluído do carrinho atual!")
-      const cartTable = $(".cart-table")
-      const cartBody = cartTable.find(".cart-body")
-      //cartBody.html("<h1>Mudou!</h1>")
-      const productsRow = cartBody.find(".cart-product")
-      const currentUrl = window.location.href
-      const refreshCartUrl = '/api/cart/';
-      const refreshCartMethod = "GET";
-      const data = {};
-      $.ajax({
-        url: refreshCartUrl,
-        method: refreshCartMethod,
-        data: data,
-        success: function (data) {
-          console.log(data)
-          const hiddenCartItemRemoveForm = $(".cart-item-remove-form")
-          if (data.products.length > 0) {
-            productsRow.html(" ")
-            let i = data.products.length
-            $.each(data.products, function (index, value) {
-              const newCartItemRemove = hiddenCartItemRemoveForm.clone()
-              newCartItemRemove.css("display", "block")
-              newCartItemRemove.find(".cart-item-product-id").val(value.id)
-              // Constrói a nova linha da tabela com uma classe padrão 'cart-item'
-              let newRowHTML = "<tr class='cart-product cart-item'><th scope=\"row\">" + i +
-                "</th><td><a  style='color: black; text-decoration: none' href='" + value.url + "'>" + value.name + "</a>" + "<td>" + newCartItemRemove.html() + "</td>" + "<td>" + value.price + "</td></tr>";
-
-              // Adiciona a nova linha ao início do corpo da tabela
-              cartBody.prepend(newRowHTML);
-              i--;
-
-              // Alternar entre as classes table-light e table-warning para as linhas da tabela
-              let cartItems = document.querySelectorAll('.cart-item');
-              cartItems.forEach((item, index) => {
-                if (index % 2 === 0) {
-                  item.classList.remove('table-warning');
-                  item.classList.add('table-light');
+        event.preventDefault();
+        const thisForm = $(this);
+        const actionEndpoint = thisForm.attr("action") || thisForm.attr("data-endpoint");
+        const httpMethod = thisForm.attr("method") || "GET";
+        const formData = thisForm.serialize();
+        $.ajax({
+            url: actionEndpoint,
+            method: httpMethod,
+            data: formData,
+            success: function (data) {
+                const submitSpan = thisForm.find(".submit-span");
+                if (data.added) {
+                    submitSpan.html("<button type='submit' class='btn btn-outline-danger'>Excluir</button>");
                 } else {
-                  item.classList.remove('table-light');
-                  item.classList.add('table-warning');
+                    submitSpan.html("<button type='submit' class='btn btn-outline-success'>Adicionar</button>");
                 }
-              });
-            });
-            cartBody.find(".cart-subtotal").text(data.subtotal)
-            cartBody.find(".cart-total").text(data.total)
-          } else {
-            window.location.href = currentUrl
-          }
-        },
-        error: function (errorData) {
-          $.alert({
-            title: "Oops!",
-            content: "Ocorreu um erro, tente mais tarde novamente!",
-            theme: "modern",
-          })
-          console.log("Erro")
-          console.log(errorData)
+                updateCartCount(data.cartItemCount);
+                if (window.location.pathname.includes("cart")) {
+                    refreshCart();
+                }
+            },
+            error: function (errorData) {
+                $.alert({
+                    title: "Oops!",
+                    content: "Ocorreu um erro, tente novamente mais tarde!",
+                    theme: "modern",
+                });
+                console.error("Erro ao enviar o formulário:", errorData);
+            }
+        });
+    });
+
+    function updateCartCount(count) {
+        const navbarCount = $(".navbar-cart-count");
+        if (navbarCount.length) {
+            navbarCount.text(count);
         }
-      })
     }
-  })
+
+    function refreshCart() {
+        const cartTable = $(".cart-table");
+        const cartBody = cartTable.find(".cart-body");
+        const refreshCartUrl = '/api/cart/';
+        $.get(refreshCartUrl, function (data) {
+            const hiddenCartItemRemoveForm = $(".cart-item-remove-form");
+            cartBody.empty();
+            if (data.products.length > 0) {
+                $.each(data.products, function (index, value) {
+                    const newCartItemRemove = hiddenCartItemRemoveForm.clone().css("display", "block");
+                    newCartItemRemove.find(".cart-item-product-id").val(value.id);
+                    let newRowHTML = "<tr class='cart-product'>" +
+                        "<th scope='row'>" + (index + 1) + "</th>" +
+                        "<td><a href='" + value.url + "' style='color: black; text-decoration: none'>" + value.name + "</a></td>" +
+                        "<td>" + newCartItemRemove.html() + "</td>" +
+                        "<td>" + value.price + "</td>" +
+                        "</tr>";
+                    cartBody.append(newRowHTML);
+                });
+                cartBody.find(".cart-subtotal").text(data.subtotal);
+                cartBody.find(".cart-total").text(data.total);
+            } else {
+                window.location.reload();
+            }
+        }).fail(function (errorData) {
+            $.alert({
+                title: "Oops!",
+                content: "Ocorreu um erro ao atualizar o carrinho, tente novamente mais tarde!",
+                theme: "modern",
+            });
+            console.error("Erro ao atualizar o carrinho:", errorData);
+        });
+    }
+});

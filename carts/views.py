@@ -10,7 +10,7 @@ from addresses.models import Address
 from billing.models import BillingProfile
 from orders.models import Order
 from products.models import Product
-from .models import Cart
+from .models import Cart, CartItem
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -37,27 +37,34 @@ def cart_home(request):
 
 def cart_update(request):
     product_id = request.POST.get('product_id')
+    quantity = int(request.POST.get('quantity', 1))
     if product_id is not None:
         try:
             product_obj = Product.objects.get(id=product_id)
         except Product.DoesNotExist:
-            print("Mostrar mensagem ao usuário, esse produto acabou!")
             return redirect("cart:home")
+
         cart_obj, new_obj = Cart.objects.new_or_get(request)
-        if product_obj in cart_obj.products.all():
-            cart_obj.products.remove(product_obj)
-            added = False
+       # cart_item, created = CartItem.objects.get_or_create(cart=cart_obj, product=product_obj)
+        cart_item_qs = CartItem.objects.filter(cart=cart_obj, product=product_obj)
+    
+        if cart_item_qs.exists():
+            cart_item = cart_item_qs.first()
+            cart_item.quantity += quantity
+            if cart_item.quantity <= 0:
+                cart_item.delete()
+            else:
+                cart_item.save()
         else:
-            cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)
-            added = True
-        request.session['cart_items'] = cart_obj.products.count()
-        # return redirect(product_obj.get_absolute_url())
+            cart_item = CartItem.objects.create(cart=cart_obj, product=product_obj, quantity=quantity)
+
+        cart_obj.update_subtotal()
+
         if is_ajax(request):
-            print("Ajax request")
             json_data = {
-                "added": added,
-                "removed": not added,
-                "cartItemCount": cart_obj.products.count()
+                "added": cart_item_qs.exists(),
+                "removed": not cart_item_qs.exists(),
+                "cartItemCount": cart_obj.items.count()
             }
             return JsonResponse(json_data)
     return redirect("cart:home")

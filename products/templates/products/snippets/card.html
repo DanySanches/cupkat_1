@@ -8,8 +8,9 @@
         <h5 class="card-title">{{ instance.title }}</h5>
         <p class="card-text">{{ instance.description|truncatewords:14 }}</p>
         <div class="button-group" style="display: flex; gap: 10px;">
-            <a href="{{ instance.get_absolute_url }}" class="btn btn-outline-info">Detalhe</a>
+            <a href="{{ instance.get_absolute_url }}" class="btn btn-outline-info btn-stringformat">Detalhe</a>
             {% include 'products/snippets/update-cart.html' with product=instance cart=cart %}
         </div>
     </div>
 </div>
+
