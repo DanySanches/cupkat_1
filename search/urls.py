@@ -8,4 +8,5 @@ from .views import (
 
 urlpatterns = [
     path('', SearchProductView.as_view(), name='query'),
+   
 ]

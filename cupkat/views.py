@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from products.models import Product
 from .forms import ContactForm
 
+
+
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
@@ -41,3 +43,4 @@ def contact_page(request):
             return HttpResponse(errors, status=400, content_type='application/json')
 
     return render(request, "contact/view.html", context)
+

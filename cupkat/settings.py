@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+   
     
     
     #our apps
@@ -48,6 +49,9 @@ INSTALLED_APPS = [
     'products',
     'search',
     'tags',
+    'simple_chatbot'
+    
+ 
 ]
 
 
@@ -93,7 +97,7 @@ WSGI_APPLICATION = 'cupkat.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db2.sqlite3',
     }
 }
 
@@ -144,3 +148,10 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SIMPLE_CHATBOT = {
+    'responses': (
+        ("bot.responses.GreetingResponse", "Greeting"),
+        ("bot.responses.GoodbyeResponse", "Goodbye"),
+    ),
+}

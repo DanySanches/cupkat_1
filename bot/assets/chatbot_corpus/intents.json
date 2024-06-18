@@ -1,0 +1,62 @@
+{
+    "intents": [
+        {
+            "tag": "saudacao",
+            "patterns": ["Olá!", "Como vai?", "Tem alguém aí?", "Oi", "Olá, tudo bem?", "Alô"],
+            "responses": ["Olá! Obrigado por visitar nossa loja.", "Que bom vê-lo novamente.", "Olá, como posso ajudar?"]
+        },
+        {
+            "tag": "despedida",
+            "patterns": ["Tchau", "Até logo", "Adeus", "Foi bom falar com você, tchau", "Até a próxima"],
+            "responses": ["Até mais!", "Tenha um ótimo dia.", "Tchau! Volte logo."]
+        },
+        {
+            "tag": "agradecimento",
+            "patterns": ["Obrigado!", "Muito obrigado.", "Isso foi útil", "Maravilha, obrigado!", "Obrigado por me ajudar!"],
+            "responses": ["Fico feliz em ajudar!", "Sempre que precisar.", "Foi um prazer."]
+        },
+        {
+            "tag": "sem_resposta",
+            "patterns": [""],
+            "responses": ["Desculpe, não consegui entender você.", "Por favor, forneça mais informações.", "Acho que não entendi."]
+        },
+        {
+            "tag": "opcoes",
+            "patterns": ["Estou entediado hoje!", "O que vocês oferecem?",
+                         "Não sei o que fazer", "Que ajuda vocês oferecem?",
+                         "Como vocês podem ser úteis?", "Que suporte é oferecido?"],
+            "responses": ["Podemos sugerir produtos personalizados. Qual é o seu interesse?",
+                          "Temos uma variedade de artigos personalizados. O que você gostaria de explorar?"]
+        },
+        {
+            "tag": "arte",
+            "patterns": ["Gosto de arte", "Gosto de artesanato", "Arte e artesanato", "Desenho", "Retrato", "Pintura"],
+            "responses": ["Que tal experimentar um novo kit de pintura personalizado?", "Você pode explorar nossos produtos de arte personalizados.",
+                          "Temos materiais de artesanato para personalizar seu próximo projeto criativo."]
+        },
+        {
+            "tag": "musica",
+            "patterns": ["Eu gosto de música", "Eu gosto de canções", "Canções e música", "Pop"],
+            "responses": ["Explore nossa coleção de instrumentos musicais personalizados.", "Descubra os melhores headphones personalizados para sua música favorita.",
+                          "Temos equipamentos de áudio personalizados de alta qualidade."]
+        },
+        {
+            "tag": "culinaria",
+            "patterns": ["Eu gosto de cozinhar", "Eu gosto de assar", "Comer pizza", "Cozinhar", "Comida"],
+            "responses": ["Confira nossos utensílios de cozinha personalizados para aprimorar suas habilidades culinárias.",
+                          "Temos livros de receitas personalizadas para inspirar suas criações na cozinha."]
+        },
+        {
+            "tag": "fitness",
+            "patterns": ["Gosto de fazer exercícios", "Gosto de aeróbica", "Exercício"],
+            "responses": ["Encontre items de exercício personalizados para sua rotina de fitness em casa.",
+                          "Explore nossas roupas esportivas personalizadas para treinos confortáveis e estilosos."]
+        },
+        {
+            "tag": "viagem",
+            "patterns": ["Gosto de viajar", "Gosto de explorar lugares diferentes", "Viajar"],
+            "responses": ["Confira nossos produtos personalizados para viagens e aventuras ao ar livre.",
+                          "Encontre acessórios de viagem personalizados para suas próximas férias."]
+        }
+    ]
+}

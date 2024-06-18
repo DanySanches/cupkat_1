@@ -1,26 +1,135 @@
-{% load static %}
-
 <!doctype html>
 <html lang="pt-BR">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Cupkat</title>
-  {% include 'base/css.html' %}
-  {% block base_head %}{% endblock base_head %}
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Cupkat</title>
+    {% load static %}
+    {% include 'base/css.html' %}
+    {% block base_head %}{% endblock base_head %}
 </head>
 
-{% include 'base/navbar.html' with nome_da_marca='Loja virtual' %}
+<body>
+    {% include 'base/navbar.html' with nome_da_marca='Loja virtual' %}
+ 
+    <div class='container'>
+        <div class="search">
+            {% include 'search/snippets/search-form.html' %}
+        </div>
+        {% block content %}
+        <!-- Conteúdo da sua página aqui -->
+      
+        {% endblock %}
 
-<div class='container'>
-  <div class="search">
-    {% include 'search/snippets/search-form.html' %}
-  </div>
-  {% block content %} {% endblock %}
-</div>
-{% include 'base/js.html' %}
+        
+    </div>
+    <div class="chatbox">
+        <div class="chatbox__chat">
+      
+          <div class="row chatbox__header">
+            <div class="col-2 chatbox__image__header">
+              <img class="chatbox__image" src="https://github.com/DanySanches/cupKatLogo/blob/main/logoV-removebg-preview.png?raw=true" width="55" height="47" alt="image">
+            </div>
+            <div class="col-10 chatbox__content__header">
+              <p class="chatbox__description">Oi. Meu nome é Vitória. Como posso ajudar?</p>
+            </div>
+          </div>
+      
+          <div class="row chatbox__messages__cotainer">
+            <div class="col" id="chat_messages">
+              <div class="user__messages">
+                Oi!
+              </div>
+              <div class="bot__messages">
+                Oi! Que bom que você está aqui! Como posso te ajudar hoje?
+              </div>
+            </div>
+          </div>
+      
+          <div class="row chatbox__footer">
+            <div class="col-9 text-left chatbox__input">
+              <input type="text" class="form-control" id="bot_input_text" placeholder="Digite sua mensagem aqui...">
+            </div>
+            <div class="col-3 text-left chatbox__send__button">
+              <button class="btn btn-light" id="send_button">Enviar</button>
+            </div>
+          </div>
+      
+        </div>
+      
+        <div class="chatbox__button">
+          <button id="open_button"></button>
+        </div>
+      </div>
+    
+
+    {% include 'base/js.html' %}
+
+   <script>
+
+
+    $(document).ready(function () {
+        displayBot();
+    });
+
+    function displayBot() {
+        $('.chatbox__button').click(function () {
+            $('.chatbox__chat').toggle();
+        });
+        //Inicie a conversa com o robô
+        askBot();
+    }
+
+
+    // Função para enviar dados do usuário para o bot e receber resposta
+    function askBot(user_input) {
+        var chat_input_data = {
+            "user_bot_input_text": user_input
+        };
+        $.ajax({
+            type: 'POST',
+            url: "/bot/response/",
+            data: JSON.stringify(chat_input_data),
+            dataType: "json",
+            contentType: 'application/json',
+            success: function (result) {
+                // Adicionar mensagem do usuário
+        $("#chat_messages").append('<div class="user__messages">' + user_input + '</div>');
+        // Adicionar mensagem do bot
+        $("#chat_messages").append('<div class="bot__messages">' + result.bot_response + '</div>');
+        // Scroll para o final das mensagens
+        $('.chatbox__messages__cotainer').animate({
+            scrollTop: $('.chatbox__messages__cotainer')[0].scrollHeight
+        }, 1000);
+    },
+            error: function (result) {
+                alert(result.responseJSON.message);
+            }
+        });
+    }
+
+    // Evento de clique no botão Enviar
+    $("#send_button").click(function () {
+        var user_bot_input_text = $("#bot_input_text").val();
+        if (user_bot_input_text != "") {
+            $("#chat_messages").append('<div class="user__messages">' + user_bot_input_text + ' </div>');
+            // Limpar a caixa de entrada de texto após enviar a mensagem
+            $("#bot_input_text").val('');
+            askBot(user_bot_input_text);
+        }
+    });
+
+    // Evento de pressionar Enter na caixa de entrada de texto
+    $('#bot_input_text').keypress(function (e) {
+        // Se a tecla Enter (código de tecla 13) for pressionada
+        if (e.which == 13) {
+            $('#send_button').click(); // Disparar o evento de clicar do botão Enviar
+        }
+    });
+</script>
+
+
 
 </body>
 

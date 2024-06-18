@@ -10,8 +10,12 @@ from accounts.views import login_page, register_page, logout_page, guest_registe
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
 from .views import (home_page,  
                     about_page, 
-                    contact_page
+                    contact_page,
+                   
+                
+                  
 )
+
 
 urlpatterns = [
     path('', home_page, name='home'),
@@ -25,12 +29,13 @@ urlpatterns = [
     path('register/guest/', guest_register_view, name='guest_register'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', register_page, name='register'),
-    path('bootstrap/', TemplateView.as_view(template_name='bootstrap/example.html')),
     path('search/', include("search.urls", namespace="search")),
     path('products/', include("products.urls", namespace="products")),
-    path('admin/', admin.site.urls),
+    path('bot/', include("bot.urls", namespace="bot")), 
+   path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
